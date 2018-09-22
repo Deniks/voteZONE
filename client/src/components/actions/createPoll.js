@@ -4,24 +4,43 @@ import M from 'materialize-css';
 export default class CreatePoll extends Component {
   constructor(props) {
       super(props);
-      this.switcher = createRef(); 
       this.range = createRef();
-      this.datepicker = createRef();
+      this.date = createRef();
+      this.title = createRef();
+      this.description = createRef();
+      this.limit = createRef();
+      this.globality = createRef();
   }
   componentDidMount() {
-    let datePicker = this.datepicker.current;
+    let datePicker = this.date.current;
     let instances = M.Datepicker.init(datePicker, {
-        parse: el => console.log(el),
-        format: "yyyy dd, mmm" 
+        
     });
   }
+  handleSubmit = e => {
+    e.preventDefault();
+    const title = this.title.current.value;
+    const description = this.description.current.value;
+    const date = this.date.current.value;
+    const limit = this.limit.current.value;
+    const globality = this.globality.current.value;
+    const data = {
+      id: new Date(),
+      title,
+      description,
+      date,
+      limit,
+      globality
+    }
+    console.log(data);
+  }
   onSwitch = () => {
-    const switcher = this.switcher.current;
+    const limit = this.limit.current;
     const range = this.range.current;
-    if (switcher.checked) {
+    if (limit.checked) {
         range.style.display = "block";
     }
-    if (!switcher.checked) {
+    if (!limit.checked) {
         range.style.display = "none";
     }
   }
@@ -36,28 +55,31 @@ export default class CreatePoll extends Component {
             justifyContent: "center",
         }}>
             <div className="row">
-                <form className="col s12">
+                <form className="col s12" onSubmit={this.handleSubmit}>
                     <div className="row">
                         <div className="input-field col s12">
-                            <i className="material-icons prefix">account_circle</i>
-                            <input id="icon_prefix" type="text" className="validate" />
+                            <i className="material-icons prefix">title</i>
+                            <input id="icon_prefix" type="text" className="white-text validate" ref={this.title} />
                             <label htmlFor="icon_prefix">Title</label>
                         </div>
+
                         <div className="input-field col s12">
-                            <i className="material-icons prefix">phone</i>
-                            <textarea id="textarea" className="materialize-textarea"></textarea>
+                            <i className="material-icons prefix">description</i>
+                            <textarea id="textarea" className="white-text materialize-textarea" ref={this.description}></textarea>
                             <label htmlFor="textarea">Description</label>
                         </div>
+
                         <div className="input-field col s12">
                             <i className="material-icons prefix">date_range</i>
-                            <input type="text" placeholder="Vote end date" className="datepicker white-text" ref={this.datepicker}/>
+                            <input type="text" placeholder="Vote end date" className="white-text datepicker white-text" ref={this.date}/>
                         </div>
-                        <div className="col s12">
+
+                        <div className="input-field col s12">
                             Voting Limit
                             <div className="switch right">
                                 <label ref={this.label}>
                                     Off
-                                    <input ref={this.switcher} type="checkbox" onChange={this.onSwitch} />
+                                    <input ref={this.limit} type="checkbox" onChange={this.onSwitch} />
                                     <span className="lever blue darken-4"></span>
                                     On
                                 </label>
@@ -66,10 +88,19 @@ export default class CreatePoll extends Component {
                                 <input type="range" id="test5" min="0" max="100" />
                             </p>
                         </div>
-
+                        <div className="input-field col s12">
+                            <div className="switch right">
+                                <label>
+                                Public
+                                <input type="checkbox" ref={this.globality}/>
+                                <span className="lever blue darken-4"></span>
+                                Private
+                                </label>
+                            </div>
+                        </div>
                         <div className="col s12">
                             <div>
-                            <button className="btn waves-effect waves-light blue darken-4 right" type="submit" name="action">Submit
+                            <button className="bottom btn waves-effect waves-light blue darken-4 right" type="submit" name="action">Submit
                                 <i className="material-icons right">send</i>
                             </button>
                             </div>

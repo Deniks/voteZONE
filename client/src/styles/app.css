@@ -1,0 +1,15 @@
+:root {
+    --primary-color: #090B10;
+    --text-color: #ffffff;
+    --app-height: 100vh;
+    --app-width: 100vw; 
+}
+
+.app {
+    height: var(--app-height);
+    width: var(--app-width);
+    background: var(--primary-color);
+    color: var(--text-color);
+    overflow-y: hidden;
+    overflow-x: hidden;
+}

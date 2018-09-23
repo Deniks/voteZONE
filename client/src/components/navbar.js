@@ -10,7 +10,8 @@ const Navbar = () => {
           <ul id="nav-mobile" className="right hide-on-med-and-down">
             <li><Link to="/create_poll">Create<i className="right material-icons">add</i></Link></li>
             <li><Link to="/vote">Vote<i className="right material-icons">create</i></Link></li>
-            <li><Link to="/ratings">Ratings<i className="right material-icons">star_rate</i></Link></li>
+            <li><Link to="/chart">Ratings<i className="right material-icons">star_rate</i></Link></li>
+            <li><Link to="/dashboard">Dashboard<i className="right material-icons">dashboard</i></Link></li>
           </ul>
         </div>
       </nav>

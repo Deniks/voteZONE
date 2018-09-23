@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
+
 import Polls from './crud/allPolls';
 
-export default class Dashboard extends Component {
+export default class Vote extends Component {
   render() {
     return (
       <div>
-        <Polls />        
+        <Polls />
       </div>
     )
   }

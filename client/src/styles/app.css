@@ -1,15 +1,19 @@
 :root {
     --primary-color: #090B10;
     --text-color: #ffffff;
-    --app-height: 100vh;
-    --app-width: 100vw; 
+    --appHeight: 100%;
+    --appWidth: 100%; 
 }
-
-.app {
-    height: var(--app-height);
-    width: var(--app-width);
-    background: var(--primary-color);
+html {
+    font-size: 16px;
     color: var(--text-color);
-    overflow-y: hidden;
+}
+body {
     overflow-x: hidden;
+}
+.app {
+    min-height: 100vh;
+    height: var(--appHeight);
+    width: var(--appWidth);
+    background: var(--primary-color);
 }

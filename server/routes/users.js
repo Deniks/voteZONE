@@ -14,16 +14,16 @@ router.get('/register', (req, res) => {
 
 // Register Proccess
 router.post('/register', (req, res) => {
-  const name = req.body.name;
+  const firstName = req.body.firstName;
+  const lastName = req.body.lastName;
   const email = req.body.email;
-  const username = req.body.username;
   const password = req.body.password;
   const password2 = req.body.password2;
 
-  req.checkBody('name', 'Name is required').notEmpty();
+  req.checkBody('firstName', 'fName is required').notEmpty();
+  req.checkBody('lastName', 'lName is required').notEmpty();
   req.checkBody('email', 'Email is required').notEmpty();
   req.checkBody('email', 'Email is not valid').isEmail();
-  req.checkBody('username', 'Username is required').notEmpty();
   req.checkBody('password', 'Password is required').notEmpty();
   req.checkBody('password2', 'Passwords do not match').equals(req.body.password);
 
@@ -35,9 +35,9 @@ router.post('/register', (req, res) => {
     });
   } else {
     const newUser = new User({
-      name,
+      firstName,
+      lastName,
       email,
-      username,
       password,
     });
 
@@ -53,6 +53,7 @@ router.post('/register', (req, res) => {
                         
                     } else {
                         req.flash('success', 'You are now registered and can log in');
+                        console.log("user is registred")
                         res.redirect('/users/login');
                     }
                 });

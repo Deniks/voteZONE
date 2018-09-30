@@ -7,14 +7,33 @@ import 'materialize-css/dist/css/materialize.min.css';
 import 'material-icons';
 
 import Home from './components/home/home';
-import CreatePoll from './components/crud/createPoll';
+import CreatePoll from './components/actions/createPoll';
 import Navbar from './components/navbar';
 import Chart from './components/chart';
-import Dashboard from './components/dashboard';
-import Vote from './components/vote';
+import Dashboard from './components/dashboard/dashboard';
+import Vote from './components/actions/vote';
 
 class App extends Component {
+  state = {
+    response: ''
+  }
+
+  componentDidMount() {
+    this.callApi()
+      .then(res => this.setState({ response: res.express }))
+      .catch(err => console.log(err));
+  }
+
+  callApi = async () => {
+    const response = await fetch('/api/hello');
+    const body = await response.json();
+
+    if (response.status !== 200) throw Error(body.message);
+
+    return body;
+  }
   render() {
+    console.log(this.state.response)
     return (
       <Router>
         <div className="app">

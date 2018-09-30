@@ -1,0 +1,10 @@
+.idetification-container {
+    max-width: 40vw;
+}
+.userPersonalInfo {
+    margin-left: 20px;
+    max-width: 20vw;
+}
+.chips .input{
+    color: var(--text-color);
+}

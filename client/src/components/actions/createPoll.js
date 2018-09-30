@@ -1,6 +1,8 @@
 import React, { Component, createRef } from 'react';
 import { connect } from 'react-redux';
 import M from 'materialize-css';
+import moment from 'moment';
+import uuid from 'uuid';
 
 class CreatePoll extends Component {
   constructor(props) {
@@ -19,7 +21,10 @@ class CreatePoll extends Component {
       this.choices = createRef();
   }
   componentDidMount() {
-    M.Datepicker.init(this.date.current, {});
+    
+    M.Datepicker.init(this.date.current, {
+        minDate: new Date()
+    });
     M.Chips.init(this.chip.current, {
         placeholder: "Enter Hashtag",
         onChipAdd: this.chipsForInput,
@@ -40,15 +45,15 @@ class CreatePoll extends Component {
     e.preventDefault();
     const title = this.title.current.value;
     const description = this.description.current.value;
-    const date = this.date.current.value;
+    const date = `finishes ${moment(this.date.current.value).fromNow()}`;
     const limit = this.limit.current.value;
     const globality = this.globality.current.value;
     const pollType = this.pollType.current.value;
     const hashtags = this.chipsForInput();
-    const choices = [...this.choices.current.value];
+    const choices = this.writtenChoiceHandler();
     console.log(choices);
     const data = {
-      id: new Date(),
+      id: uuid(),
       title,
       description,
       date,
@@ -74,17 +79,17 @@ class CreatePoll extends Component {
         range.style.display = "none";
     }
   }
+  writtenChoiceHandler = () => {
+    let choices = [];
+    for (let i=0; i<this.modalContent.current.childNodes.length; i++) {
+        choices.push(this.modalContent.current.childNodes[i].firstChild.value);
+    }
+    return choices
+  }
   addChoice = () => {
-   /* const modal = this.modal.current.childNodes[0];
     const modalChild = this.modalChild.current;
-    const newInput = React.createElement(
-        modalChild,
-        null,
-        null
-    );
-    modal.appendChild(newInput);
-    console.log(modal.childNodes[0]);
-    console.log(modalChild); */
+    const modalChildClone = modalChild.cloneNode(true);
+    this.modalContent.current.appendChild(modalChildClone);
   }
   render() {
     return (
@@ -111,12 +116,23 @@ class CreatePoll extends Component {
                             <label htmlFor="textarea">Description</label>
                         </div>
 
+                        <div className="input-field col s12 white-text">
+                            <div className="switch right">
+                                <label ref={this.label}>
+                                    For free
+                                    <input ref={this.limit} type="checkbox" onChange={this.onSwitch} />
+                                    <span className="lever blue darken-4"></span>
+                                    Bill
+                                </label>
+                            </div>
+                        </div>
+
                         <div className="input-field col s12">
                             <i className="material-icons prefix">date_range</i>
                             <input  type="text" placeholder="Vote end date" className="white-text datepicker white-text" ref={this.date}/>
                         </div>
 
-                        <div className="input-field col s12">
+                        <div className="input-field col s12 white-text">
                             Voting Limit
                             <div className="switch right">
                                 <label ref={this.label}>
@@ -142,7 +158,7 @@ class CreatePoll extends Component {
                         </div>
 
                         
-                        <div className="input-field col s12">
+                        <div className="input-field col s12 white-text">
                             Poll source
                             <div className="switch right">
                               <label>
@@ -162,21 +178,15 @@ class CreatePoll extends Component {
                                     <h4>Choices</h4>
                                     <a onClick={this.addChoice} className="right black btn-floating btn-large waves-effect waves-light red"><i className="material-icons">add</i></a>
                                     <div ref={this.modalContent}>
+                                        <div ref={this.modalChild}>
+                                            <textarea id="textarea" className="choice white-text materialize-textarea"></textarea>
+                                        </div>
                                         <div>
-                                            <textarea ref={this.choices} id="textarea" className="white-text materialize-textarea"></textarea>
-                                            <label htmlFor="textarea">Description</label>
-                                        </div>
-                                        <div ref={this.modalChild}>
-                                            <textarea ref={this.choices} id="textarea" className="white-text materialize-textarea"></textarea>
-                                            <label htmlFor="textarea">Description</label>
-                                        </div>
-                                        <div ref={this.modalChild}>
-                                            <textarea ref={this.choices} id="textarea" className="white-text materialize-textarea"></textarea>
-                                            <label htmlFor="textarea">Description</label>
+                                            <textarea id="textarea" className="choice white-text materialize-textarea"></textarea>
                                         </div>
                                     </div>
                                 </div>
-                                <div className="modal-footer">
+                                <div className="modal-footer" onClick={this.writtenChoiceHandler}>
                                     <a href="#!" className="modal-close waves-effect waves-green btn-flat">Done</a>
                                 </div>
                             </div>

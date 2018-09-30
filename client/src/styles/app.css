@@ -16,4 +16,9 @@ body {
     height: var(--appHeight);
     width: var(--appWidth);
     background: var(--primary-color);
+    z-index: -1;
+}
+
+.chips .input {
+    color: #fff;
 }

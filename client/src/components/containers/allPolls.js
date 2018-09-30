@@ -1,7 +1,8 @@
 import React, { Component, createRef } from 'react'
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
-import Poll from './poll';
+import Poll from '../actions/poll';
 
 class Polls extends Component {
   constructor(props) {
@@ -21,17 +22,19 @@ class Polls extends Component {
   }
   render() {
     return (
-      <div ref={this.allPolls}>
+      <div ref={this.allPolls} >
         {console.log(this.props.polls)}
-        {this.props.polls.map((poll) => <Poll ref={this.poll} key={poll.id} poll={poll} />)}
+        {this.props.polls.map((poll) => <Link to={`/vote/:id`}><Poll subscribeBtn={this.props.children} ref={this.poll} key={poll.id} poll={poll} /></Link>)}
       </div>
     )
   }
 }
-
-const mapStateToProps = state => {
+const mapStateToProps = state => ({
+  polls: state.pollReducer // Notice TodoApp is used instead of todos
+});
+/*const mapStateToProps = state => {
   return {
     polls: state
   }
-}
+} */
 export default connect(mapStateToProps)(Polls);

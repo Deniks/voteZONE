@@ -30,8 +30,8 @@ export default class UserExperience extends Component {
                         <div className="progress">
                             <div className="determinate" style={{width: "70%"}}></div>
                         </div>
-                        <div className="userName">
-                            Denis Rezanovich
+                        <div className="userName" name="username">
+                            Example 
                         </div>
                     </div>
                 </div>

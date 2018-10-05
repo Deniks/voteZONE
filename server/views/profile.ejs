@@ -6,8 +6,11 @@
     <title>Document</title>
 </head>
 <body>
-    <a href="/users/log-in">Login</a>
-    <br>
-    <a href="/users/register">Register</a>
+    <form action="/users/profile" method="post">
+        <label for="profile">User</label>
+        <input type="text" name="profile">
+    </form>
+    <div class="username" name="username"></div>
+    <a href="/users/logout">Logout</a>
 </body>
 </html>

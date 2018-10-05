@@ -17,13 +17,13 @@ const Home = () => {
             <div className="card-panel transparent z-depth-4">
               <div className="card-tabs">
                 <ul className="tabs transparent tabs-fixed-width">
-                  <li className="tab"><Link to="/log-in" className="active">Log In</Link></li>
-                  <li className="tab"><Link to="/sign-up">Sign Up</Link></li>
+                  <li className="tab"><Link to="/users/log-in"  className="active">Log In</Link></li>
+                  <li className="tab"><Link to="/users/sign-up">Sign Up</Link></li>
                 </ul>
               </div>
               <Switch>
-                <Route exact path="/log-in" component={LogIn} />
-                <Route path="/sign-up" component={SignUp} />
+                <Route exact path="/users/log-in" component={LogIn} />
+                <Route path="/users/sign-up" component={SignUp} />
               </Switch>
             </div>
           </form>

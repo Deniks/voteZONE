@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import Votes from '../containers/allVotes';
+import Votes from '../../store/containers/allVotes';
     
 export default class ActivePolls extends Component {
   render() {

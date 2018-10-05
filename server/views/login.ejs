@@ -7,18 +7,19 @@
 </head>
 <body>
     <h1>Login</h1>
-
-    <form action="/users/login" method="POST">
+    <div class="profile"></div>
+    <form action="/users/log-in" method="POST">
         <div id="form-group">
-            <label for="email">Email</label>
-            <input type="email" name="email">
+            <label for="username">Username</label>
+            <input type="text" name="username">
         </div>
         <div id="form-group">
-            <label for="password"></label>
+            <label for="password">Password</label>
             <input type="password" name="password">
         </div>
         <br>
         <input type="submit" value="Submit">
     </form>
+
 </body>
 </html>

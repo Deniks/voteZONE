@@ -7,11 +7,11 @@ import 'materialize-css/dist/css/materialize.min.css';
 import 'material-icons';
 
 import Home from './components/home/home';
-import CreatePoll from './components/actions/createPoll';
+import CreatePoll from './store/actions/createPoll';
 import Navbar from './components/navbar';
 import Chart from './components/chart';
 import Dashboard from './components/dashboard/dashboard';
-import Vote from './components/actions/vote';
+import Vote from './store/actions/vote';
 
 class App extends Component {
   state = {

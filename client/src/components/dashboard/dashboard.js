@@ -2,7 +2,7 @@ import React, { Component, createRef } from 'react'
 import M from 'materialize-css';
 import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
 import '../../styles/dashboard.css'
-import Polls from '../containers/allPolls';
+import Polls from '../../store/containers/allPolls';
 import UserExperience from './userExperience';
 import ActivePolls from './activePolls';
 

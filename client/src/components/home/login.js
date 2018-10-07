@@ -14,7 +14,6 @@ class LogIn extends Component {
   }
   passToProps = (e) => {
     e.preventDefault();
-    this.e.submit();
   }
   render() {
     return (

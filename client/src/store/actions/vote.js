@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import uuid from 'uuid';
-
+import axios from 'axios';
 import Polls from '../containers/allPolls';
 
 

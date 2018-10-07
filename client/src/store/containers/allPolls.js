@@ -11,6 +11,7 @@ class Polls extends Component {
     this.allPolls = createRef();
   }
   componentDidMount() {
+  //  axios.get(`/vote/${this.props.}`)
     const poll = this.poll.current;
     const allPolls = this.allPolls.current;
     if (!this.onLoad(poll)) {
@@ -24,7 +25,7 @@ class Polls extends Component {
     return (
       <div ref={this.allPolls} >
         {console.log(this.props.polls)}
-        {this.props.polls.map((poll) => <Link to={`/vote/:id`}><Poll subscribeBtn={this.props.children} ref={this.poll} key={poll.id} poll={poll} /></Link>)}
+        {this.props.polls.map((poll) => <Poll subscribeBtn={this.props.children} ref={this.poll} key={poll.id} poll={poll} />)}
       </div>
     )
   }

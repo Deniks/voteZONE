@@ -87,12 +87,13 @@ class CreatePoll extends Component {
     return choices
   }
   addChoice = () => {
-    const modalChild = this.modalChild.current;
-    const modalChildClone = modalChild.cloneNode(true);
+    let modalChild = this.modalChild.current;
+    let modalChildClone = modalChild.cloneNode(true);
     this.modalContent.current.appendChild(modalChildClone);
   }
   render() {
     return (
+        <form method="POST" action="/create_poll">
         <div style={{
             width: "50vw",
             height: "100vh",
@@ -106,16 +107,15 @@ class CreatePoll extends Component {
                     <div className="row">
                         <div className="input-field col s12">
                             <i className="material-icons prefix">title</i>
-                            <input id="icon_prefix" type="text" className="white-text validate" ref={this.title} />
+                            <input name="title" id="icon_prefix" type="text" className="white-text validate" ref={this.title} />
                             <label htmlFor="icon_prefix">Title</label>
                         </div>
 
                         <div className="input-field col s12">
                             <i className="material-icons prefix">description</i>
-                            <textarea id="textarea" className="white-text materialize-textarea" ref={this.description}></textarea>
+                            <textarea name="description" id="textarea" className="white-text materialize-textarea" ref={this.description}></textarea>
                             <label htmlFor="textarea">Description</label>
                         </div>
-
                         <div className="input-field col s12 white-text">
                             <div className="switch right">
                                 <label ref={this.label}>
@@ -129,7 +129,7 @@ class CreatePoll extends Component {
 
                         <div className="input-field col s12">
                             <i className="material-icons prefix">date_range</i>
-                            <input  type="text" placeholder="Vote end date" className="white-text datepicker white-text" ref={this.date}/>
+                            <input  name="finishDate" type="text" placeholder="Vote end date" className="white-text datepicker white-text" ref={this.date}/>
                         </div>
 
                         <div className="input-field col s12 white-text">
@@ -208,6 +208,7 @@ class CreatePoll extends Component {
                 </form>
             </div>
         </div>
+        </form>
       )
   }
 }

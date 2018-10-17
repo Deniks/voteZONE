@@ -17,22 +17,21 @@ class LogIn extends Component {
   }
   render() {
     return (
-      <form method="POST">
+      <form action="/users/log-in" method="POST">
         <div className="row">
             <div className="input-field col s12">
               <i className="material-icons prefix">account_circle</i>
-              <textarea ref={this.usernameField} id="icon_prefix2" className="materialize-textarea"></textarea>
+              <textarea name="username" ref={this.usernameField} id="icon_prefix2" className="materialize-textarea"></textarea>
               <label forhtml="icon_prefix2">Username</label>
             </div>
     
             <div className="input-field col s12">
               <i className="material-icons prefix">lock</i>
-              <input ref={this.passwordField} id="password" type="password" className="validate" />
+              <input name="password" ref={this.passwordField} id="password" type="password" className="validate" />
               <label forhtml="password">Password</label>
             </div>
-            <button type="submit" name="action" onClick={this.passToProps} ref={this.loginButton} className="btn blue darken-4 btn-small right">
-              <i className="material-icons">arrow_forward</i>
-            </button>
+            <button type="submit" name="action" ref={this.loginButton} className="btn btn-small right blue darken-4"><i className="material-icons">arrow_forward</i></button>
+
         </div>
       </form>
     )

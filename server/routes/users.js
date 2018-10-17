@@ -8,15 +8,13 @@ const passport = require('passport');
 const User = require('../models/user');
 
 // Register Form
-router.get('/register', (req, res) => {
+router.get('/sing-up', (req, res) => {
   res.render('register');
 });
 router.get('/profile', (req, res) => {
   res.render('profile');
 });
-router.post('/profile', (req, res, next) => {
-    const username = req.body.username;
-});
+
 
 // Register Proccess
 router.post('/sign-up', (req, res) => {
@@ -38,9 +36,8 @@ router.post('/sign-up', (req, res) => {
   const errors = req.validationErrors();
 
   if (errors) {
-    res.render('register', {
-      errors,
-    });
+    console.log(errors);
+    res.redirect('/users/sign-up')
   } else {
     const newUser = new User({
       firstName,
@@ -63,7 +60,7 @@ router.post('/sign-up', (req, res) => {
                     } else {
                         req.flash('success', 'You are now registered and can log in');
                         console.log("user is registred")
-                        res.redirect('/users/login');
+                        res.redirect('/users/log-in');
                     }
                 });
       });
@@ -76,17 +73,25 @@ router.get('/log-in', function(req, res){
   res.render('login');
 });
 
+router.get('/profile', (req, res) => {
+  User.find({}, (err, user) => {
+    res.render('profile', {
+      users: user
+    })
+  });
+});
+
 // Login Process
-router.post('/log-in', function(req, res, next){
+router.post('/log-in', (req, res, next) => {
   passport.authenticate('local', {
-    successRedirect:'/',
+    successRedirect:'/dashboard/experience',
     failureRedirect:'/',
     failureFlash: true
   })(req, res, next);
+  console.log('log in - success');
 });
 
-
-// logout
+// logout, just add href attribute to something with value of "users/log-out"
 router.get('/log-out', function(req, res){
   req.logout();
   req.flash('success', 'You are logged out');

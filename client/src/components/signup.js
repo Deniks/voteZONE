@@ -2,7 +2,7 @@ import React from 'react'
 
 const SignUp = () => {
   return (
-    <form method="POST">
+    <form action="/users/sign-up" method="POST">
       <div className="row">
             <div className="row">
               <div className="input-field col s6">
@@ -17,7 +17,7 @@ const SignUp = () => {
 
             <div className="row">
               <div className="input-field col s12">
-                <i class="material-icons prefix">account_circle</i>
+                <i className="material-icons prefix">account_circle</i>
                 <input id="first_name" type="text" className="validate" name="username" />
                 <label forhtml="first_name">Username</label>
               </div>

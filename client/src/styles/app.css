@@ -2,15 +2,18 @@
     --primary-color: #090B10;
     --text-color: #ffffff;
     --appHeight: 100%;
-    --appWidth: 100%; 
+    --appWidth: 100%;
 }
+
 html {
     font-size: 16px;
     color: var(--text-color);
 }
+
 body {
     overflow-x: hidden;
 }
+
 .app {
     min-height: 100vh;
     height: var(--appHeight);
@@ -21,4 +24,21 @@ body {
 
 .chips .input {
     color: #fff;
+}
+
+input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0;
+    /* <-- Apparently some margin are still there even though it's hidden */
+}
+
+.fade-enter {
+    opacity: 0;
+    z-index: 1;
+}
+
+.fade-enter.fade-enter-active {
+    opacity: 1;
+    transition: opacity 250ms ease-in;
 }

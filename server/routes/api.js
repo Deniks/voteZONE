@@ -1,17 +1,12 @@
 const express = require('express');
 const router = express.Router();
+const User = require('../models/user');
 
-const Task = require('../models/task');
-
-router.post('/new', (req, res) => {
-    Task.create({
-        task: req.body.task
-    }, (err, task) => {
-        if (err) {
-            console.log(`CREATE Error ${err}`);
-        } else {
-            res.status(200).json(task);
-        }
-    });
+router.get('/users', (req, res) => {
+    User.find({}, (err, user) => {
+        res.send(user)
+        console.log(user);
+      });
 });
 
+module.exports = router;

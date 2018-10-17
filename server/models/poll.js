@@ -5,8 +5,7 @@ const Schema = mongoose.Schema;
 const PollSchema = new Schema({
     title: {
         type: String,
-        required: true,
-        index: true
+        required: true
     },
     description: {
         type: String,
@@ -15,8 +14,21 @@ const PollSchema = new Schema({
     finishDate: {
         type: String,
         required: true
+    },
+    votingLimit: {
+        type: Number,
+    },
+    choices: {
+        type: Array,
+        required: true
+    },
+    banner: {
+        data: Buffer,
+        contentType: String
+    },
+    hashtags: {
+        type: Array
     }
-
 });
 
 const Poll = module.exports = mongoose.model('Poll', PollSchema);

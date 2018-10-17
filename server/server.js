@@ -10,20 +10,9 @@ const flash = require('connect-flash');
 const session = require('express-session');
 const passport = require('passport');
 const config = require('./config/database');
-const Pusher = require('pusher');
 require('./config/database');
 
-const pusher = new Pusher({
-  appId: process.env.PUSHER_APP_ID,
-  key: process.env.PUSHER_APP_KEY,
-  secret: process.env.PUSHER_APP_SECRET,
-  cluster: 'eu',
-  encrypted: true
-});
 
-pusher.trigger('my-channel', 'my-event', {
-  "message": "hello world"
-});
 
 const app = express();
 
@@ -87,8 +76,12 @@ app.get('*', (req, res, next) => {
 
 // Route Files
 const users = require('./routes/users');
+const polls = require('./routes/polls');
+const api = require('./routes/api');
 
 app.use('/users', users);
+app.use('/polls', polls);
+app.use('/api', api);
 
 app.listen(process.env.PORT, (err) => {
   if (err) {

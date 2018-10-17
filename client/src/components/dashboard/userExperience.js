@@ -1,14 +1,34 @@
 import React, { Component } from 'react'
 import M from 'materialize-css';
-
+import uuid from 'uuid';
 export default class UserExperience extends Component {
   constructor(props) {
       super(props);
       this.parallax = React.createRef();
+      this.state = {
+          users: []
+      }
   }
+
+
   componentDidMount() {
+    fetch('/api/users')
+        .then(response => {
+            if (response.status !== 200) {
+                console.log(`Look like there was a problem. Status Code: ${response.status}`)
+                return;
+            }
+            response.json().then(data => {
+                data.key = uuid()
+                this.setState({ users: data })
+            })
+            .then(console.log(this.state.users));
+        })
+        .catch(err => console.log(`Fetch Error :-s${err}`));
+        
     M.Parallax.init(this.parallax.current, {});
   }
+
   render() {
     return (
       <div>
@@ -31,7 +51,7 @@ export default class UserExperience extends Component {
                             <div className="determinate" style={{width: "70%"}}></div>
                         </div>
                         <div className="userName" name="username">
-                            Example 
+                            { this.state.users}
                         </div>
                     </div>
                 </div>

@@ -1,0 +1,76 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        html {
+            font-size: 16px;
+        }
+        .poll {
+            background: #3e3e3e;
+            padding: 20px;
+            margin: 50px;
+            width: auto;
+            display: flex;
+            flex-direction: row;
+        }
+        .poll div {
+            color: #fff;
+            margin: 10px;
+            border: 1px solid #000;
+            padding: 10px;
+        }
+        .poll p {
+            color: darkcyan;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+    </style>
+</head>
+<body>
+    
+    <h1>Polls Naletay!</h1>
+    
+    <% for(let i=0; i<polls.length; i++) { %>
+        <div class="poll">
+            <div>
+                <p>Title</p>
+                <br>
+                <%= polls[i].title %>
+            </div>
+            <div>
+                <p>Description</p>
+                <br>
+                <%= polls[i].description %>
+            </div>
+            <div>
+                <p>Finish Date</p>
+                <br>
+                <%= polls[i].finishDate %>
+            </div>
+            <div>
+                <p>Voting Limit</p>
+                <br>
+                <%= polls[i].votingLimit %>
+            </div>
+            <div>
+                <p>Choices</p>
+                <br>
+                <%= polls[i].choices %>
+            </div>
+            <div>
+                <p>Banner</p>
+                <br>
+                <img src="image/<%= polls[i].banner %>" alt="">
+            </div>
+            <div>
+                <p>Hashtags</p>
+                <br>
+                <%= polls[i].hashtags %>
+            </div>
+        </div>
+    <% } %>
+</body>
+</html>

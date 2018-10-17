@@ -6,11 +6,9 @@
     <title>Document</title>
 </head>
 <body>
-    <form action="/users/profile" method="post">
-        <label for="profile">User</label>
-        <input type="text" name="profile">
-    </form>
-    <div class="username" name="username"></div>
-    <a href="/users/logout">Logout</a>
+    <h1>
+        Username - <%= user.username %>
+    </h1>
+    <a href="/users/log-out">Logout</a>
 </body>
 </html>

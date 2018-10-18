@@ -6,7 +6,11 @@ router.get('/users', (req, res) => {
     User.find({}, (err, user) => {
         res.send(user)
         console.log(user);
-      });
+    });
+});
+
+router.get('/personal', (req, res) => {
+    // For user registration data fetching
 });
 
 module.exports = router;

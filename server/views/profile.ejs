@@ -7,8 +7,30 @@
 </head>
 <body>
     <h1>
-        Username - <%= user.username %>
+        users: 
     </h1>
+    <div class="users"></div>
     <a href="/users/log-out">Logout</a>
+    <script>
+            let users = document.querySelector('.users');
+            fetch('/api/users')
+                .then(response => {
+                    response.json().then(data => {
+                        const state = [];
+                        let output = '<div>'
+                        for (let i in data) {
+                            state.push(data[i].lastName);
+                        }
+                        for (let i=0; i<state.length; i++) {
+                            output += `<li>${state[i]}</li>`;
+                        }
+                        output += '</div>';
+                        users.innerHTML = output;
+                    })
+                })
+                .catch(err => console.log(err));
+        </script>
 </body>
 </html>
+
+

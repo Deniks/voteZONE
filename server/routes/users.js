@@ -11,10 +11,10 @@ const User = require('../models/user');
 router.get('/sing-up', (req, res) => {
   res.render('register');
 });
-router.get('/profile', (req, res) => {
+
+router.get('/dashboard/experience', (req, res) => {
   res.render('profile');
 });
-
 
 // Register Proccess
 router.post('/sign-up', (req, res) => {

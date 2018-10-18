@@ -4,6 +4,7 @@ import uuid from 'uuid';
 export default class UserExperience extends Component {
   constructor(props) {
       super(props);
+      this.userName = React.createRef();
       this.parallax = React.createRef();
       this.state = {
           users: []
@@ -19,10 +20,25 @@ export default class UserExperience extends Component {
                 return;
             }
             response.json().then(data => {
-                data.key = uuid()
-                this.setState({ users: data })
+                let output = '<div>';
+                let state = this.state.users;
+                const valArr = [];
+
+                for (let i in data) {
+                    valArr.push(data[i].username);
+                }
+
+                state.push(valArr);
+                state = state[0];
+                this.setState({ users: state });
+                
+                for (let i=0; i<state.length; i++) {
+                    output  += `<li>${state[i]}</li>`;
+                }
+                
+                output += '</div>';
+                this.userName.current.innerHTML = output;
             })
-            .then(console.log(this.state.users));
         })
         .catch(err => console.log(`Fetch Error :-s${err}`));
         
@@ -50,8 +66,8 @@ export default class UserExperience extends Component {
                         <div className="progress">
                             <div className="determinate" style={{width: "70%"}}></div>
                         </div>
-                        <div className="userName" name="username">
-                            { this.state.users}
+                        <div ref={this.userName} className="userName" name="username">
+                            
                         </div>
                     </div>
                 </div>

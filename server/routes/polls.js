@@ -17,7 +17,7 @@ router.post('/create_poll', (req, res) => {
     const finishDate = req.body.finishDate;
     const votingLimit = req.body.votingLimit;
     const choices = req.body.choices;
-    const banner = req.body.banner;
+ //   const banner = req.body.banner;
     const hashtags = req.body.hashtags;
     
     req.checkBody('title', 'title is required').notEmpty();
@@ -25,7 +25,7 @@ router.post('/create_poll', (req, res) => {
     req.checkBody('finishDate', 'finishDate is required').notEmpty();
     req.checkBody('votingLimit', 'votingLimit is required').notEmpty();
     req.checkBody('choices', 'choices are required').notEmpty();
-    req.checkBody('banner', 'banner is required');
+ //   req.checkBody('banner', 'banner is required');
     req.checkBody('hashtags', 'hastags are required');
 
     const errors = req.validationErrors();
@@ -40,7 +40,7 @@ router.post('/create_poll', (req, res) => {
             finishDate,
             votingLimit,
             choices,
-            banner,
+   //         banner,
             hashtags
         });
         newPoll.save(err => {

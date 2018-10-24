@@ -8,8 +8,9 @@ const bodyParser = require('body-parser');
 const expressValidator = require('express-validator');
 const flash = require('connect-flash');
 const session = require('express-session');
+const MongoStore = require('connect-mongo')(session);
 const passport = require('passport');
-const config = require('./config/database');
+const db = require('./config/database');
 require('./config/database');
 
 
@@ -30,20 +31,23 @@ app.use(bodyParser.json());
 app.use(session({
   secret: 'keyboard cat',
   resave: true,
-  saveUninitialized: false
+  saveUninitialized: false,
+  store: new MongoStore({
+    mongooseConnection: db
+  })
 }));
 
 
 // Express Messages Middleware
 app.use(require('connect-flash')());
-app.use(function (req, res, next) {
+app.use((req, res, next) => {
   res.locals.messages = require('express-messages')(req, res);
   next();
 });
 
 // Express Validator Middleware
 app.use(expressValidator({
-  errorFormatter: function(param, msg, value) {
+  errorFormatter: (param, msg, value) => {
       var namespace = param.split('.')
       , root    = namespace.shift()
       , formParam = root;
@@ -77,22 +81,25 @@ app.get('*', (req, res, next) => {
 // Route Files
 const users = require('./routes/users');
 const polls = require('./routes/polls');
-const api = require('./routes/api');
+//const usersApi = require('./routes/api/users');
+const pollsApi = require('./routes/api/polls');
 
 app.use('/users', users);
 app.use('/polls', polls);
-app.use('/api', api);
-
+//app.use('/api', usersApi);
+app.use('/api', pollsApi);
+app.use((req, res, next) => {
+  console.log('req.session', req.session);
+  return next();
+});
 app.listen(process.env.PORT, (err) => {
   if (err) {
     throw err;
   } else {
     console.log(
       `
-    Server is running on port: ${process.env.PORT}
-    ---
-    Running on ${process.env.NODE_ENV}
-    `,
+        Server is running on port: ${process.env.PORT}
+      `,
     );
   }
 });

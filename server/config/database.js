@@ -11,7 +11,7 @@ db.once('open', () => {
 
 // Check for DB errors
 db.on('error', (err) => {
-  console.log(err);
+  console.log(`An error occured ===> ${err}`);
 });
 
 module.exports = db;

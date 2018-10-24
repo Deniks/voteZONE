@@ -1,8 +1,20 @@
 import React, { Component, createRef } from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 import M from 'materialize-css';
 import moment from 'moment';
 import uuid from 'uuid';
+
+import Title from '../../components/pollForm/title';
+import Description from '../../components/pollForm/description';
+import DateRange from '../../components/pollForm/dateRange';
+import VotingLimit from '../../components/pollForm/votingLimit';
+import Choices from '../../components/pollForm/choices';
+import Confirm from '../../components/pollForm/confirm';
+import Globality from '../../components/pollForm/globality';
+import PollCost from '../../components/pollForm/pollCost';
+import PollOrigin from '../../components/pollForm/pollOrigin';
+import Hashtags from '../../components/pollForm/hashtags';
 
 class CreatePoll extends Component {
   constructor(props) {
@@ -119,113 +131,39 @@ class CreatePoll extends Component {
                 <div className="row">
                     <form action="/polls/create_poll" method="POST" className="col s12" onSubmit={this.handleSubmit}>
                         <div className="row">
-                            <div className="input-field col s12">
-                                <i className="material-icons prefix">title</i>
-                                <input name="title" id="icon_prefix" type="text" className="white-text validate" ref={this.title} />
-                                <label htmlFor="icon_prefix">Title</label>
-                            </div>
+                            <Title />
+                            <Description />
 
-                            <div className="input-field col s12">
-                                <i className="material-icons prefix">description</i>
-                                <textarea name="description" id="textarea" className="white-text materialize-textarea" ref={this.description}></textarea>
-                                <label htmlFor="textarea">Description</label>
-                            </div>
                             <div className="input-field col s12 white-text">
-                                <div className="switch right">
-                                    <label ref={this.label}>
-                                        For free
-                                        <input ref={this.limit} type="checkbox" onChange={this.onSwitch} />
-                                        <span className="lever blue darken-4"></span>
-                                        Bill
-                                    </label>
-                                </div>
+                                <PollCost />
                             </div>
 
                             <div className="input-field col s12">
-                                <i className="material-icons prefix">date_range</i>
-                                <input  name="finishDate" type="text" placeholder="Vote end date" className="white-text datepicker white-text" ref={this.date}/>
+                                <DateRange />
                             </div>
 
                             <div className="input-field col s12 white-text">
-                                Voting Limit                                
-                                <div className="switch right">
-                                    <label ref={this.label}>
-                                        Off
-                                        <input name="votingLimit" ref={this.limit} type="checkbox" onChange={this.onSwitch} />
-                                        <span className="lever blue darken-4"></span>
-                                        On
-                                    </label>
-                                </div>
-                                <div ref={this.rangeZone} style={{display: "none"}}>
-                                    <p ref={this.range} className="range-field">
-                                        <input onChange={this.onProgressValueChange} type="range" id="test5" min="0" max="10000" />
-                                    </p>
-                                    <div className="input-field col s3 right">
-                                        <input ref={this.maxVotingValue} style={{color: "#fff"}} id="icon_telephone" type="number" className="validate" />
-                                        <label forhtml="icon_telephone">Max</label>
-                                    </div>
-                                    <div className="input-field col s3">
-                                        <input ref={this.votingLimitCounter} disabled value="0" style={{color: "#fff"}} type="text"/>
-                                    </div>
-                                </div>
+                                <VotingLimit />
                             </div>
                             <div className="input-field col s12">
-                                <div className="switch right">
-                                    <label>
-                                        Public
-                                        <input type="checkbox" ref={this.globality}/>
-                                        <span className="lever blue darken-4"></span>
-                                        Private
-                                    </label>
-                                </div>
+                                <Globality />
                             </div>
 
                             
                             <div className="input-field col s12 white-text">
-                                Poll source
-                                <div className="switch right">
-                                <label>
-                                    Social Network
-                                    <input type="checkbox" ref={this.pollType} />
-                                    <span className="lever blue darken-4"></span>
-                                    Own
-                                </label>
-                                </div>
+                                <PollOrigin />
                             </div>
                             
                             <div className="input-field col s12">
-                                <a className="blue darken-4 waves-effect waves-light btn modal-trigger" href="#modal1">Setup choices</a>
-
-                                <div ref={this.modal} id="modal1" className="modal blue darken-4 modal-fixed-footer">
-                                    <div  className="modal-content">
-                                        <h4>Choices</h4>
-                                        <a onClick={this.addChoice} className="right black btn-floating btn-large waves-effect waves-light red"><i className="material-icons">add</i></a>
-                                        <div ref={this.modalContent}>
-                                            <div ref={this.modalChild}>
-                                                <textarea id="textarea" className="choice white-text materialize-textarea"></textarea>
-                                            </div>
-                                            <div>
-                                                <textarea id="textarea" className="choice white-text materialize-textarea"></textarea>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="modal-footer" onClick={this.writtenChoiceHandler}>
-                                        <a href="#!" className="modal-close waves-effect waves-green btn-flat">Done</a>
-                                    </div>
-                                    <input name="choices" ref={this.newChoicesHandler} style={{ display: "none" }} /> 
-                                </div>
+                                <Choices />
                             </div>
 
                             <div className="input-field col s12">
-                            <div className="chips chips-placeholder" ref={this.chip}></div>
+                                <Hashtags />
                             </div>
 
                             <div className="col s12">
-                                <div>
-                                    <button className="bottom btn waves-effect waves-light blue darken-4 right" type="submit" name="action">Submit
-                                        <i className="material-icons right">send</i>
-                                    </button>
-                                </div>
+                                <Confirm />
                             </div>
 
                         </div>

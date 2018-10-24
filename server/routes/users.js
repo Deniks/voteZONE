@@ -1,3 +1,6 @@
+
+require('dotenv');
+
 const express = require('express');
 
 const router = express.Router();
@@ -12,7 +15,7 @@ router.get('/sing-up', (req, res) => {
   res.render('register');
 });
 
-router.get('/dashboard/experience', (req, res) => {
+router.get('/dashboard/experience', requiredLogin, (req, res, next) => {
   res.render('profile');
 });
 
@@ -34,7 +37,6 @@ router.post('/sign-up', (req, res) => {
   req.checkBody('password2', 'Passwords do not match').equals(req.body.password);
 
   const errors = req.validationErrors();
-
   if (errors) {
     console.log(errors);
     res.redirect('/users/sign-up')
@@ -68,8 +70,13 @@ router.post('/sign-up', (req, res) => {
   }
 });
 
+const loggedIn = (req, res, next) => {
+  if (req.user) next()
+  else res.redirect('/login');
+}
+
 // Login Form
-router.get('/log-in', function(req, res){
+router.get('/log-in', (req, res) => {
   res.render('login');
 });
 
@@ -83,19 +90,45 @@ router.get('/profile', (req, res) => {
 
 // Login Process
 router.post('/log-in', (req, res, next) => {
+  /*const sid = req.sessionID;
+  const username = req.body.username;
+  const password = req.body.password;
+
+  User.findOne({username: username, password: password}, (err, result) => {
+    sessionStorage.destroy(result.session, () => User.update({id: result._id}, {$set: {"session": sid}}));
+  })
+  */
   passport.authenticate('local', {
-    successRedirect:'/dashboard/experience',
+    successRedirect: '/users/dashboard/experience',
     failureRedirect:'/',
     failureFlash: true
   })(req, res, next);
+
   console.log('log in - success');
 });
 
 // logout, just add href attribute to something with value of "users/log-out"
-router.get('/log-out', function(req, res){
+router.get('/log-out', function(req, res, next){
+  if (req.session) {
+    req.session.destroy(err => {
+      if (err) return next(err)
+      else return res.redirect('/users/log-in')
+    });
+  }
+  /*               ALTERNATIVE VARIANT
   req.logout();
   req.flash('success', 'You are logged out');
   res.redirect('/users/log-in');
+  */
 });
+
+function requiredLogin(req, res, next) {
+  if (req.session && req.session.passport.user) return next()
+  else {
+    let err = new Error('You must be logged in to view this page.');
+    err.status = 401;
+    return next(err);
+  }
+}
 
 module.exports = router;

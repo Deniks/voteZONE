@@ -28,14 +28,9 @@ class Vote extends Component {
           this.setState({
             poll: allPolls
           })
-          console.log(allPolls)
-          console.log(this.state.poll);
-
+          console.log(this.state.poll)
         })
-      }).catch(err => console.log(`Fetch Error :-s${err}`))
-      
-      
-      this.state.poll.map((anObject, index) => console.log(`${anObject} - ${index}`));
+      }).catch(err => console.log(`Fetch Error :-s${err}`))     
   }
   
   handleSubscription = el => {
@@ -54,7 +49,7 @@ class Vote extends Component {
             title={anObjectMapped.title}
             description={anObjectMapped.description}
             choices={anObjectMapped.choices}
-            date={anObjectMapped.date}
+            date={anObjectMapped.finishDate}
             hashtags={anObjectMapped.hashtags}
             subscribeButton={<SubscribeButton />}
           />)

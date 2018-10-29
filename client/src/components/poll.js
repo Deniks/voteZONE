@@ -10,8 +10,7 @@ const Poll = (props) => (
                     <span className="card-title">{props.title}</span>
                     <p>{props.description}</p>
                     <form action="#">
-                                {props.choices}
-                                {/*props.choices.map(choice => {
+                                {props.choices.map(choice => {
                                     const RadioBtn = (props) => {
                                         return (
                                             <label>
@@ -23,22 +22,21 @@ const Poll = (props) => (
                                     let p = React.createElement('p', {key: uuid() }, <RadioBtn />)
                 
                                     return p;
-                                })*/}
+                                })}
                     </form>
                     <span className="right">{props.date}</span>
 
                 </div>
                 <div className="card-action">
                     <div>
-                        {props.hashtags}
-                        {/*props.hashtags.map(el => {
+                        {props.hashtags.map(el => {
                             let a = React.createElement(
                                 'a',
                                 null,
                                 el
                             );
                             return '#' + el + '  ';
-                        })*/}
+                        })}
                     </div>
                     {props.subscribeBtn}
                 </div>

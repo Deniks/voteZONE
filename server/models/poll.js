@@ -22,10 +22,10 @@ const PollSchema = new Schema({
         type: Array,
         required: true
     },
-    banner: {
+   /* banner: {
         data: Buffer,
         contentType: String
-    },
+    },*/
     hashtags: {
         type: Array
     }

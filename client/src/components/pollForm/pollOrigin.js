@@ -4,7 +4,7 @@ const PollOrigin = (props) => (
     <div className="switch right">
         <label>
             Public
-            <input type="checkbox" ref={this.globality}/>
+            <input type="checkbox" ref={props.globality}/>
             <span className="lever blue darken-4"></span>
             Private
         </label>

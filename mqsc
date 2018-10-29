@@ -1,0 +1,69 @@
+[1mdiff --git a/server/routes/users.js b/server/routes/users.js[m
+[1mindex 13f1f0d..5b410ad 100644[m
+[1m--- a/server/routes/users.js[m
+[1m+++ b/server/routes/users.js[m
+[36m@@ -6,6 +6,7 @@[m [mconst express = require('express');[m
+ const router = express.Router();[m
+ const bcrypt = require('bcryptjs');[m
+ const passport = require('passport');[m
+[32m+[m[32mconst requiredLogin = require('../controllers/auth');[m
+ [m
+ // Bring in User Model[m
+ const User = require('../models/user');[m
+[36m@@ -70,17 +71,12 @@[m [mrouter.post('/sign-up', (req, res) => {[m
+   }[m
+ });[m
+ [m
+[31m-const loggedIn = (req, res, next) => {[m
+[31m-  if (req.user) next()[m
+[31m-  else res.redirect('/login');[m
+[31m-}[m
+[31m-[m
+ // Login Form[m
+ router.get('/log-in', (req, res) => {[m
+   res.render('login');[m
+ });[m
+ [m
+[31m-router.get('/profile', (req, res) => {[m
+[32m+[m[32mrouter.get('/profile', requiredLogin, (req, res) => {[m
+   User.find({}, (err, user) => {[m
+     res.render('profile', {[m
+       users: user[m
+[36m@@ -108,7 +104,7 @@[m [mrouter.post('/log-in', (req, res, next) => {[m
+ });[m
+ [m
+ // logout, just add href attribute to something with value of "users/log-out"[m
+[31m-router.get('/log-out', function(req, res, next){[m
+[32m+[m[32mrouter.get('/log-out', requiredLogin, (req, res, next) => {[m
+   if (req.session) {[m
+     req.session.destroy(err => {[m
+       if (err) return next(err)[m
+[36m@@ -122,13 +118,6 @@[m [mrouter.get('/log-out', function(req, res, next){[m
+   */[m
+ });[m
+ [m
+[31m-function requiredLogin(req, res, next) {[m
+[31m-  if (req.session && req.session.passport.user) return next()[m
+[31m-  else {[m
+[31m-    let err = new Error('You must be logged in to view this page.');[m
+[31m-    err.status = 401;[m
+[31m-    return next(err);[m
+[31m-  }[m
+[31m-}[m
+[32m+[m
+ [m
+ module.exports = router;[m
+[1mdiff --git a/server/views/index.ejs b/server/views/index.ejs[m
+[1mindex a7ddfc5..fd1e37e 100644[m
+[1m--- a/server/views/index.ejs[m
+[1m+++ b/server/views/index.ejs[m
+[36m@@ -11,5 +11,8 @@[m
+     <a href="/users/register">Register</a>[m
+     <br>[m
+     <a href="/polls/dashboard">Dashboard</a>[m
+[32m+[m[32m    <br>[m
+[32m+[m[32m    <hr>[m
+[32m+[m[32m    <a href="/users/log-out">Logout</a>[m
+ </body>[m
+ </html>[m
+\ No newline at end of file[m

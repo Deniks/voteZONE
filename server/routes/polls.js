@@ -31,7 +31,7 @@ router.post('/create_poll', (req, res) => {
     const errors = req.validationErrors();
 
     if (errors) {
-        console.log(`Something went wrong 404 => ${errors}`)
+        console.log(`Something went wrong 404 => ${JSON.stringify(errors)}`)
         res.render('error');
     } else {
         const newPoll = new Poll({
@@ -55,10 +55,10 @@ router.post('/create_poll', (req, res) => {
 });
 
 router.get('/vote', (req, res) => {
-        Poll.find((err, polls) => {
-            if (err) res.send(err);
-            res.json(polls);
-        });
+    Poll.find((err, polls) => {
+        if (err) res.send(err);
+        res.json(polls);
+    });
 });
 
 

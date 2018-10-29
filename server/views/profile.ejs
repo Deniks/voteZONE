@@ -6,12 +6,14 @@
     <title>Document</title>
 </head>
 <body>
+    <h3 class="currentUser" style="float: right">You are <i><%= user.username %></i></h3>
     <h1>
         users: 
     </h1>
     <div class="users"></div>
     <a href="/users/log-out">Logout</a>
     <script>
+            let currUsers = document.querySelector('.currentUser');
             let users = document.querySelector('.users');
             fetch('/api/users')
                 .then(response => {

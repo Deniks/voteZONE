@@ -6,6 +6,19 @@ import Polls from '../containers/allPolls';
 
 
 class Vote extends Component {
+  componentDidMount() {
+    fetch('/api/polls')
+      .then(response => {
+      if (response.status !== 200) {
+        console.log(`Look like there was a problem. Status Code: ${response.status}`)
+        return;
+      }
+      response.json().then(data => {
+        console.log(data);
+      })
+      })
+      .catch(err => console.log(`Fetch Error :-s${err}`));
+  }
   handleSubscription = el => {
     el.preventDefault();
     const data = {
@@ -24,7 +37,7 @@ class Vote extends Component {
     }
     return (
       <div>
-        <Polls>
+        <Polls content="haha">
           <SubscribeButton/>
         </Polls>
       </div>

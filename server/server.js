@@ -88,6 +88,7 @@ app.use('/users', users);
 app.use('/polls', polls);
 //app.use('/api', usersApi);
 app.use('/api', pollsApi);
+
 app.use((req, res, next) => {
   console.log('req.session', req.session);
   return next();

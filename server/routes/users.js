@@ -6,6 +6,7 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
 const passport = require('passport');
+//const requiredLogin = require('../controllers/auth');
 
 // Bring in User Model
 const User = require('../models/user');
@@ -15,8 +16,21 @@ router.get('/sing-up', (req, res) => {
   res.render('register');
 });
 
+function requiredLogin(req, res, next) {
+  console.log(req.session.passport.user);
+  if (req.session && req.session.passport.user) return next()
+  else {
+    res.redirect('/users/log-in')
+    let err = new Error('You must be logged in to view this page.');
+    alert(err);
+    err.status = 401;
+    return next(err);
+  }
+}
 router.get('/dashboard/experience', requiredLogin, (req, res, next) => {
-  res.render('profile');
+  User.find({}, (err, user) => {
+    res.render('profile', {username: user})
+  });
 });
 
 // Register Proccess
@@ -70,22 +84,9 @@ router.post('/sign-up', (req, res) => {
   }
 });
 
-const loggedIn = (req, res, next) => {
-  if (req.user) next()
-  else res.redirect('/login');
-}
-
 // Login Form
 router.get('/log-in', (req, res) => {
   res.render('login');
-});
-
-router.get('/profile', (req, res) => {
-  User.find({}, (err, user) => {
-    res.render('profile', {
-      users: user
-    })
-  });
 });
 
 // Login Process
@@ -103,12 +104,10 @@ router.post('/log-in', (req, res, next) => {
     failureRedirect:'/',
     failureFlash: true
   })(req, res, next);
-
-  console.log('log in - success');
 });
 
 // logout, just add href attribute to something with value of "users/log-out"
-router.get('/log-out', function(req, res, next){
+router.get('/log-out', (req, res, next) => {
   if (req.session) {
     req.session.destroy(err => {
       if (err) return next(err)
@@ -122,13 +121,6 @@ router.get('/log-out', function(req, res, next){
   */
 });
 
-function requiredLogin(req, res, next) {
-  if (req.session && req.session.passport.user) return next()
-  else {
-    let err = new Error('You must be logged in to view this page.');
-    err.status = 401;
-    return next(err);
-  }
-}
+
 
 module.exports = router;

@@ -19,6 +19,7 @@ import Hashtags from '../../components/pollForm/hashtags';
 class CreatePoll extends Component {
   constructor(props) {
       super(props);
+     // this.child1 = createRef();
       this.newChoicesHandler = createRef();
       this.maxVotingValue = createRef();
       this.votingLimitCounter = createRef();
@@ -29,7 +30,7 @@ class CreatePoll extends Component {
       this.description = createRef();
       this.limit = createRef();
       this.globality = createRef();
-      this.pollType = createRef();
+  //    this.pollType = createRef();
       this.chip = createRef();
       this.modal = createRef();
       this.modalChild = createRef();
@@ -37,6 +38,7 @@ class CreatePoll extends Component {
       this.choices = createRef();
   }
   componentDidMount() {
+   // let date = this.child1.refs.date;
     M.Datepicker.init(this.date.current, {
         minDate: new Date()
     });
@@ -63,7 +65,7 @@ class CreatePoll extends Component {
     const date = `finishes ${moment(this.date.current.value).fromNow()}`;
     const limit = this.limit.current.value;
     const globality = this.globality.current.value;
-    const pollType = this.pollType.current.value;
+  //  const pollType = this.pollType.current.value;
     const hashtags = this.chipsForInput();
     const choices = this.writtenChoiceHandler();
     console.log(choices);
@@ -74,7 +76,7 @@ class CreatePoll extends Component {
       date,
       limit,
       globality,
-      pollType,
+  //    pollType,
       hashtags,
       choices
     }
@@ -119,6 +121,7 @@ class CreatePoll extends Component {
     this.modalContent.current.appendChild(modalChildClone);
   }
   render() {
+    
     return (
             <div style={{
                 width: "50vw",
@@ -129,43 +132,63 @@ class CreatePoll extends Component {
                 alignItems: "center"
             }}>
                 <div className="row">
-                    <form action="/polls/create_poll" method="POST" className="col s12" onSubmit={this.handleSubmit}>
+                    <form action="/polls/create_poll" method="POST" className="col s12" >
                         <div className="row">
-                            <Title />
-                            <Description />
+                            <Title title={this.title} />
+                            <Description description={this.description} />
 
                             <div className="input-field col s12 white-text">
-                                <PollCost />
+                                <PollCost 
+                                    label={this.label}
+                                    limit={this.limit}
+                                    onSwitch={this.onSwitch}
+                                />
                             </div>
 
                             <div className="input-field col s12">
-                                <DateRange />
+                                <DateRange setRef={this.date} />
                             </div>
 
                             <div className="input-field col s12 white-text">
-                                <VotingLimit />
+                                <VotingLimit 
+                                    label={this.label}
+                                    limit={this.limit}
+                                    onSwitch={this.onSwitch}
+                                    rangeZone={this.rangeZone}
+                                    range={this.range}
+                                    onProgressValueChange={this.onProgressValueChange}
+                                    maxVotingValue={this.maxVotingValue}
+                                    votingLimitCounter={this.votingLimitCounter}
+                                />
                             </div>
                             <div className="input-field col s12">
-                                <Globality />
+                                <Globality globality={this.globality} />
                             </div>
 
                             
                             <div className="input-field col s12 white-text">
-                                <PollOrigin />
+                                <PollOrigin globality={this.globality} />
                             </div>
                             
                             <div className="input-field col s12">
-                                <Choices />
+                                <Choices 
+                                    modal={this.modal} 
+                                    modalContent={this.modalContent} 
+                                    modalChild={this.modalChild}
+                                    newChoicesHandler={this.newChoicesHandler}
+                                    writtenChoiceHandler={this.writtenChoiceHandler}
+                                    addChoice={this.addChoice}
+                                />
                             </div>
 
                             <div className="input-field col s12">
-                                <Hashtags />
+                                <Hashtags chip={this.chip} />
                             </div>
 
                             <div className="col s12">
                                 <Confirm />
                             </div>
-
+                        
                         </div>
                     </form>
                 </div>

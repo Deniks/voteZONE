@@ -14,8 +14,8 @@ import CreatePoll from './store/actions/createPoll';
 import Navbar from './components/navbar';
 import Chart from './components/chart';
 import Dashboard from './components/dashboard/dashboard';
-import Vote from './store/actions/vote';
-
+//import Vote from './store/actions/vote'; With redux
+import Vote from './components/vote';
 class App extends Component {
   state = {
     response: ''

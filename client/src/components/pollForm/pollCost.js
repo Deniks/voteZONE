@@ -2,9 +2,9 @@ import React from 'react';
 
 const PollCost = (props) => (
     <div className="switch right">
-        <label ref={this.label}>
+        <label ref={props.label}>
             For free
-            <input ref={this.limit} type="checkbox" onChange={this.onSwitch} />
+            <input ref={props.limit} type="checkbox" onChange={props.onSwitch} />
             <span className="lever blue darken-4"></span>
             Bill
         </label>

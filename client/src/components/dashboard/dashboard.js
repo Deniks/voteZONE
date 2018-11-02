@@ -13,9 +13,9 @@ export default class Dashboard extends Component {
         <Router>
             <main>
               <Switch>
-                <Route exact path="/dashboard/experience" component={UserExperience} />
-                <Route path="/dashboard/active/:id" component={ActivePolls} />
-                <Route path="/dashboard/own" component={Polls} />
+                <Route exact path="/stats/experience" component={UserExperience} />
+                <Route path="/stats/active" component={ActivePolls} />
+                <Route path="/stats/own" component={Polls} />
               </Switch>
               <div className="sidebar" style={{
                 position: "fixed",
@@ -26,9 +26,9 @@ export default class Dashboard extends Component {
                 <div className="row" style={{marginBottom: "0"}}>
                     <div className="col s12">
                       <ul className="tabs" style={{background: "none"}}>
-                        <li className="tab col s3 m1 l4"><Link to="/dashboard/experience">experience</Link></li>
-                        <li className="tab col s3 m1 l4"><Link to="/dashboard/active/:id">active</Link></li>
-                        <li className="tab col s3 m1 l4"><Link to="/dashboard/own">own</Link></li>
+                        <li className="tab col s3 m1 l4"><Link to="/stats/experience">experience</Link></li>
+                        <li className="tab col s3 m1 l4"><Link to="/stats/active">active</Link></li>
+                        <li className="tab col s3 m1 l4"><Link to="/stats/own">own</Link></li>
                       </ul>
                     </div>
                   </div>

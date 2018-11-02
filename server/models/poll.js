@@ -28,6 +28,9 @@ const PollSchema = new Schema({
     },*/
     hashtags: {
         type: Array
+    },
+    subscribed: {
+        type: Boolean
     }
 });
 

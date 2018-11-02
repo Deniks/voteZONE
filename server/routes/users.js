@@ -1,4 +1,3 @@
-
 require('dotenv');
 
 const express = require('express');
@@ -6,10 +5,32 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
 const passport = require('passport');
-//const requiredLogin = require('../controllers/auth');
-
+const multer = require('multer');
+const crypto = require('crypto');
+const path = require('path');
 // Bring in User Model
 const User = require('../models/user');
+
+const storage = require('multer-gridfs-storage')({
+  url: process.env.DATABASE,
+  file: (req, file) => {
+    return new Promise((resolve, reject) => {
+      crypto.randomBytes(16, (err, buf) => {
+        if (err) {
+          return reject(err);
+        }
+        const filename = buf.toString('hex') + path.extname(file.originalname);
+        const fileInfo = {
+          filename: filename,
+          bucketName: 'uploads'
+        };
+        resolve(fileInfo);
+      });
+    });
+  }
+});
+
+const upload = multer({ storage: storage });
 
 // Register Form
 router.get('/sing-up', (req, res) => {
@@ -27,10 +48,19 @@ function requiredLogin(req, res, next) {
     return next(err);
   }
 }
-router.get('/dashboard/experience', requiredLogin, (req, res, next) => {
+
+router.get('/dashboard/experience', requiredLogin, (req, res) => {
+
   User.find({}, (err, user) => {
-    res.render('profile', {username: user})
+    res.render('profile', {
+      username: user,
+      avaterField: process.env.AVATAR_FIELD
+    })
   });
+});
+router.post('/dashboard/experience', upload.single('file'), (req, res) => {
+  console.log(req.file);
+  upload.single(req.body.tempfile);
 });
 
 // Register Proccess
@@ -70,15 +100,15 @@ router.post('/sign-up', (req, res) => {
         }
         newUser.password = hash;
         newUser.save((err) => {
-                    if (err) {
-                        console.log(err);
-                        
-                    } else {
-                        req.flash('success', 'You are now registered and can log in');
-                        console.log("user is registred")
-                        res.redirect('/users/log-in');
-                    }
-                });
+          if (err) {
+            console.log(err);
+
+          } else {
+            req.flash('success', 'You are now registered and can log in');
+            console.log("user is registred")
+            res.redirect('/users/log-in');
+          }
+        });
       });
     });
   }
@@ -101,7 +131,7 @@ router.post('/log-in', (req, res, next) => {
   */
   passport.authenticate('local', {
     successRedirect: '/users/dashboard/experience',
-    failureRedirect:'/',
+    failureRedirect: '/',
     failureFlash: true
   })(req, res, next);
 });

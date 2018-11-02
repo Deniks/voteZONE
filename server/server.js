@@ -81,13 +81,14 @@ app.get('*', (req, res, next) => {
 // Route Files
 const users = require('./routes/users');
 const polls = require('./routes/polls');
-//const usersApi = require('./routes/api/users');
-const pollsApi = require('./routes/api/polls');
+const stats = require('./routes/stats');
+const apis = require('./routes/api/index');
+
 
 app.use('/users', users);
 app.use('/polls', polls);
-//app.use('/api', usersApi);
-app.use('/api', pollsApi);
+app.use('/stats', stats);
+app.use('/api', apis.pollsApi);
 
 app.use((req, res, next) => {
   console.log('req.session', req.session);

@@ -35,10 +35,10 @@ const Poll = (props) => (
                                 null,
                                 el
                             );
-                            return '#' + el + '  ';
+                            return <a>{el + '  '}</a>;
                         })}
                     </div>
-                    {props.subscribeBtn}
+                    {props.subscribeButton}
                 </div>
             </div>
         </div>

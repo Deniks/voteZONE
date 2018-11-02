@@ -103,7 +103,6 @@ class CreatePoll extends Component {
       const range = this.range.current.firstChild;
       this.votingLimitCounter.current.value = range.value;
       range.max = this.maxVotingValue.current.value;
-      console.log(range.value)
   }
   
   writtenChoiceHandler = () => {

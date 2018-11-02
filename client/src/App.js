@@ -17,27 +17,7 @@ import Dashboard from './components/dashboard/dashboard';
 //import Vote from './store/actions/vote'; With redux
 import Vote from './components/vote';
 class App extends Component {
-  state = {
-    response: ''
-  }
-
-  componentDidMount() {
-    this.callApi()
-      .then(res => this.setState({ response: res.express }))
-      .catch(err => console.log(err));
-  }
-
-  callApi = async () => {
-    const response = await fetch('/api/hello');
-    const body = await response.json();
-
-    if (response.status !== 200) throw Error(body.message);
-
-    return body;
-  }
   render() {
-
-    console.log(this.state.response)
     return (
       <Router>
         <div className="app">
@@ -52,7 +32,7 @@ class App extends Component {
                 <Route exact path="/" component={Home} />
                 <Route path="/polls/create_poll" component={CreatePoll} />
                 <Route path="/chart" component={Chart} />
-                <Route path="/dashboard" component={Dashboard} />
+                <Route path="/stats" component={Dashboard} />
                 <Route path="/polls/vote" component={Vote} />
               </Switch>
             </CSSTransition>

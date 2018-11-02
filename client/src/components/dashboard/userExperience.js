@@ -13,6 +13,7 @@ export default class UserExperience extends Component {
 
 
   componentDidMount() {
+
     fetch('/api/users')
         .then(response => {
             if (response.status !== 200) {

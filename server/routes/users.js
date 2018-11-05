@@ -4,14 +4,17 @@ const express = require('express');
 
 const router = express.Router();
 const bcrypt = require('bcryptjs');
+const requiredLogin = require('../controllers/auth');
 const passport = require('passport');
 const multer = require('multer');
 const crypto = require('crypto');
 const path = require('path');
+const gfs = require('../config/database').gfs
+const GridFsStorage = require('multer-gridfs-storage');
 // Bring in User Model
 const User = require('../models/user');
 
-const storage = require('multer-gridfs-storage')({
+const storage = new GridFsStorage({
   url: process.env.DATABASE,
   file: (req, file) => {
     return new Promise((resolve, reject) => {
@@ -30,38 +33,34 @@ const storage = require('multer-gridfs-storage')({
   }
 });
 
-const upload = multer({ storage: storage });
-
+const upload = multer({ storage });
 // Register Form
 router.get('/sing-up', (req, res) => {
   res.render('register');
 });
 
-function requiredLogin(req, res, next) {
-  console.log(req.session.passport.user);
-  if (req.session && req.session.passport.user) return next()
-  else {
-    res.redirect('/users/log-in')
-    let err = new Error('You must be logged in to view this page.');
-    alert(err);
-    err.status = 401;
-    return next(err);
-  }
-}
 
-router.get('/dashboard/experience', requiredLogin, (req, res) => {
-
-  User.find({}, (err, user) => {
-    res.render('profile', {
-      username: user,
-      avaterField: process.env.AVATAR_FIELD
-    })
-  });
-});
-router.post('/dashboard/experience', upload.single('file'), (req, res) => {
-  console.log(req.file);
-  upload.single(req.body.tempfile);
-});
+router.post('/dashboard/experience', upload.single('file'), (req, res, next) => {
+  console.log(gfs.files.find().toArray((err, files) => {
+      // Check if files
+      if (!files || files.length === 0) {
+        res.send('no files')
+      } else {
+        files.map(file => {
+          if (
+            file.contentType === 'image/jpeg' ||
+            file.contentType === 'image/png'
+          ) {
+            file.isImage = true;
+          } else {
+            file.isImage = false;
+          }
+        });
+        res.send(files);
+      }
+  }))
+  res.end('It worked');
+}); 
 
 // Register Proccess
 router.post('/sign-up', (req, res) => {
@@ -130,7 +129,7 @@ router.post('/log-in', (req, res, next) => {
   })
   */
   passport.authenticate('local', {
-    successRedirect: '/users/dashboard/experience',
+    successRedirect: '/stats/dashboard',
     failureRedirect: '/',
     failureFlash: true
   })(req, res, next);

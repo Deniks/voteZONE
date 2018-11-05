@@ -1,6 +1,6 @@
 import React, { Component, createRef } from 'react';
 import Poll from './poll';
-
+import axios from 'axios';
 class Vote extends Component {
   constructor(props) {
       super(props);

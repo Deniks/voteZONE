@@ -13,7 +13,7 @@ export default class Dashboard extends Component {
         <Router>
             <main>
               <Switch>
-                <Route exact path="/stats/experience" component={UserExperience} />
+                <Route exact path="/stats/profile" component={UserExperience} />
                 <Route path="/stats/active" component={ActivePolls} />
                 <Route path="/stats/own" component={Polls} />
               </Switch>
@@ -26,7 +26,7 @@ export default class Dashboard extends Component {
                 <div className="row" style={{marginBottom: "0"}}>
                     <div className="col s12">
                       <ul className="tabs" style={{background: "none"}}>
-                        <li className="tab col s3 m1 l4"><Link to="/stats/experience">experience</Link></li>
+                        <li className="tab col s3 m1 l4"><Link to="/stats/profile">profile</Link></li>
                         <li className="tab col s3 m1 l4"><Link to="/stats/active">active</Link></li>
                         <li className="tab col s3 m1 l4"><Link to="/stats/own">own</Link></li>
                       </ul>

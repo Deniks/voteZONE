@@ -42,7 +42,10 @@
 
         <input type="submit" value="submit" />
     </form>
-
+    <form action="/users/dashboard/experience" method="POST" enctype="multipart/form-data">
+        <input name="file"  type="file" accept="image/*" />
+        <input type="submit" value="submit" />
+    </form>
     <script>
     
         const choices = document.getElementsByClassName('choice');

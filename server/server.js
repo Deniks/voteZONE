@@ -10,7 +10,7 @@ const flash = require('connect-flash');
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
 const passport = require('passport');
-const db = require('./config/database');
+const db = require('./config/database').db;
 require('./config/database');
 
 
@@ -62,7 +62,6 @@ app.use(expressValidator({
     };
   }
 }));
-
 app.get('/', (req, res) => {
   res.render('index', { title: 'Hey', message: 'Hello there!' });
 });
@@ -83,11 +82,11 @@ const users = require('./routes/users');
 const polls = require('./routes/polls');
 const stats = require('./routes/stats');
 const apis = require('./routes/api/index');
-
+const requriedLogin = require('./controllers/auth');
 
 app.use('/users', users);
 app.use('/polls', polls);
-app.use('/stats', stats);
+app.use('/stats', requriedLogin, stats);
 app.use('/api', apis.pollsApi);
 
 app.use((req, res, next) => {
